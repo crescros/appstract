@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react'
 import CanvasDraw from "react-canvas-draw";
-import { Button, TextField } from "@material-ui/core"
+import { Button, TextField, Grid, Typography, Slider } from "@material-ui/core"
 import ColorPicker from 'material-ui-color-picker'
-
 
 import { useHistory } from "react-router-dom"
 
@@ -11,6 +10,7 @@ import { postDrawing } from "../functions.js"
 export default function Draw() {
     const [drawingName, setDrawingName] = useState()
     const [brushColor, setBrushColor] = useState("#444")
+    const [brushSize, setBrushSize] = useState(12)
 
     const history = useHistory()
 
@@ -24,34 +24,59 @@ export default function Draw() {
             "uploadedAt": new Date()
         })
 
-        console.log(response)
-
         history.push("/view")
     }
 
     const handleChangeNameInput = (e) => {
-        console.log(e.target.value)
         setDrawingName(e.target.value)
     }
 
-    return (
-        <div>
-            <TextField
-                value={drawingName}
-                label="picture name"
-                onChange={handleChangeNameInput}
-            />
-            <CanvasDraw
-                ref={canvasRef}
-                brushColor={brushColor}
-            />
-            <ColorPicker
-                name='color'
+    const handleChangeSlider = (e, newValue) => {
+        setBrushSize(newValue)
+    }
 
-                value={brushColor} 
-                onChange={color => setBrushColor(color)}
-            />
-            <Button onClick={handleClick} variant="contained" color="secondary">upload </Button>
-        </div>
+    return (
+        <Grid container direction={"column"} style={{ maxWidth: "400px" }} spacing={2}>
+            <Grid item>
+                <TextField
+                    value={drawingName}
+                    label="picture name"
+                    onChange={handleChangeNameInput}
+                />
+            </Grid>
+            <Grid item>
+                <CanvasDraw
+                    ref={canvasRef}
+                    brushColor={brushColor}
+                    lazyRadius={0}
+                    brushRadius={brushSize }
+                />
+            </Grid>
+            <Grid item container>
+                <Grid item xs={4}>
+                    <Typography>brush color </Typography>
+                </Grid>
+                <Grid item xs={8}>
+                    <ColorPicker
+                        style={{ background: brushColor, borderRadius: "12px", width: "100%"}}
+                        defaultValue="brush color"
+                        name='color'
+                        value={brushColor}
+                        onChange={color => setBrushColor(color)}
+                    />
+                </Grid>
+            </Grid>
+            <Grid item container>
+                <Grid item xs={4}>
+                    <Typography>brush size </Typography>
+                </Grid>
+                <Grid item xs={8}>
+                    <Slider onChange={handleChangeSlider} value={brushSize}/>
+                </Grid>
+            </Grid>
+            <Grid item>
+                <Button onClick={handleClick} variant="contained" color="secondary">upload </Button>
+            </Grid>
+        </Grid>
     )
 }
