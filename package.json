@@ -1,0 +1,27 @@
+{
+  "name": "appstract",
+  "version": "1.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "deploy": "npm run build && gcloud app deploy --project appstract --quiet",
+    "build": "cd frontend && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IanWalston/appstract.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IanWalston/appstract/issues"
+  },
+  "homepage": "https://github.com/IanWalston/appstract#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nocache": "^2.1.0",
+    "uuid": "^8.3.1"
+  }
+}
