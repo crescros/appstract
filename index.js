@@ -31,7 +31,7 @@ app.post("/api/drawings", (req, res) => {
   let drawing = req.body
 
   drawing.id = uuidv4()
-  drawings.push(req.body)
+  drawings.shift(req.body)
   res.send('ok')
 })
 

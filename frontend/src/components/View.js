@@ -58,9 +58,11 @@ export default function View() {
                     </Grid>
                     <Typography color="textSecondary">uploaded {(new Date(img.uploadedAt)).toLocaleDateString(undefined, timeFormattingOptions)}</Typography>
                     <CanvasDraw
-                        style={{ pointerEvents: "none" }}
+                        // style={{ pointerEvents: "none" }}
                         saveData={img.drawing}
                         brushRadius={0}
+                        hideGrid={false}
+                        disabled={true}
                     />
                 </Box>
             })}

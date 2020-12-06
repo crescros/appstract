@@ -4,7 +4,7 @@ const baseUrl = process.env.REACT_APP_APPSTRACT_URL;
 // const baseUrl = "http://localhost:3016";
 
 export function postDrawing(data) {
-    axios({
+    return axios({
         data: data,
         headers: {
             'Content-Type': 'application/json'
