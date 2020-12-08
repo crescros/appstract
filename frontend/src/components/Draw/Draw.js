@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Button, TextField, Grid, Typography, Slider, Select, MenuItem } from "@material-ui/core"
+import { Button, TextField, Grid, Typography, Slider, Select, MenuItem, InputLabel } from "@material-ui/core"
 import ColorPicker from 'material-ui-color-picker'
 
 import { useHistory, useLocation } from "react-router-dom"
@@ -19,14 +19,16 @@ export default function Draw() {
     const [drawingName, setDrawingName] = useState()
     const [brushColor, setBrushColor] = useState("#444")
     const [brushSize, setBrushSize] = useState(12)
-    const backgroundId = query.get("background")
+    let backgroundId = query.get("background")
+
+    if (!backgroundId) backgroundId = "none"
 
     const history = useHistory()
 
     const canvasRef = useRef(null)
 
     const handleClickUpload = async () => {
-        if (!confirm("upload the image?")) return;
+        if (!confirm("upload the drawing?")) return;
         const data = canvasRef.current.getSaveData()
         const response = await postDrawing({
             "name": drawingName || "untitled",
@@ -49,9 +51,9 @@ export default function Draw() {
     const handleClickUndo = () => {
         canvasRef.current.undo()
     }
-    
+
     const handleClickClear = () => {
-        if (!confirm("are you sure you want to clear the entire image? ")) return;
+        if (!confirm("are you sure you want to clear the entire drawing? ")) return;
         canvasRef.current.clear()
     }
 
@@ -63,6 +65,18 @@ export default function Draw() {
     return (
         <Grid container direction={"column"} style={{ maxWidth: "400px" }} spacing={2}>
             <Grid item>
+                <InputLabel>Background</InputLabel>
+                <Select label="background" name="background" onChange={handleChangeBackground} value={backgroundId} style={{ minWidth: "100px" }}>
+                    <MenuItem value="none">None</MenuItem>
+                    <MenuItem value="1">Background 1</MenuItem>
+                    <MenuItem value="2">Background 2</MenuItem>
+                    <MenuItem value="3">Background 3</MenuItem>
+                    <MenuItem value="4">Background 4</MenuItem>
+                    <MenuItem value="5">Background 5</MenuItem>
+                    <MenuItem value="6">Background 6</MenuItem>
+                </Select>
+            </Grid>
+            <Grid item>
                 <TextField
                     value={drawingName}
                     label="picture name"
@@ -73,10 +87,10 @@ export default function Draw() {
                 <Canvas {...{ brushColor, canvasRef, brushSize }} imgUrl={getBackgroundUrlFromId(backgroundId)} />
             </Grid>
             <Grid item container>
-                <Grid item xs={4}>
-                    <Typography>brush color </Typography>
+                <Grid item xs={2}>
+                    <Typography align="center">color </Typography>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={2}>
                     <ColorPicker
                         style={{ background: brushColor, borderRadius: "12px", width: "100%" }}
                         defaultValue="brush color"
@@ -85,34 +99,23 @@ export default function Draw() {
                         onChange={color => setBrushColor(color)}
                     />
                 </Grid>
-            </Grid>
-            <Grid item container>
-                <Grid item xs={4}>
-                    <Typography>brush size </Typography>
+                <Grid item xs={2}>
+                    <Typography align="center">size </Typography>
                 </Grid>
-                <Grid item xs={8}>
-                    <Slider onChange={handleChangeSlider} value={brushSize} />
+                <Grid item xs={6}>
+                    <Slider min={1} onChange={handleChangeSlider} value={brushSize} />
                 </Grid>
             </Grid>
-            <Grid item container>
-                <Grid item xs={4}>
-                    <Typography>background</Typography>
+            <Grid item container justify="space-around">
+                <Grid item>
+                    <Button onClick={handleClickClear} variant="contained" color="secondary">clear </Button>
                 </Grid>
-                <Grid item xs={8}>
-                    <Select onChange={handleChangeBackground} value={backgroundId} >
-                        <MenuItem value="" >None</MenuItem>
-                        <MenuItem value="1">Background 1</MenuItem>
-                    </Select>
+                <Grid item>
+                    <Button onClick={handleClickUndo} variant="contained" color="secondary">undo </Button>
                 </Grid>
-            </Grid>
-            <Grid item>
-                <Button onClick={handleClickUndo} variant="contained" color="secondary">undo </Button>
-            </Grid>
-            <Grid item>
-                <Button onClick={handleClickClear} variant="contained" color="secondary">clear </Button>
-            </Grid>
-            <Grid item>
-                <Button onClick={handleClickUpload} variant="contained" color="secondary">upload </Button>
+                <Grid item>
+                    <Button onClick={handleClickUpload} variant="contained" color="primary">upload </Button>
+                </Grid>
             </Grid>
         </Grid>
     )
