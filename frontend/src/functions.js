@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useLocation } from "react-router-dom"
 
 const baseUrl = process.env.REACT_APP_APPSTRACT_URL;
 // const baseUrl = "http://localhost:3016";
@@ -43,6 +44,20 @@ export function removeDrawing(id) {
 }
 
 // BACKGROUNDS
+function useQuery() {
+    return new URLSearchParams(useLocation().search)
+}
+
+export function getCurrentBackgroundId(){
+
+    let query = useQuery()
+    
+    let backgroundId = query.get("background")
+    
+    if (!backgroundId) backgroundId = "none"
+
+    return backgroundId
+}
 
 export function getBackgroundUrlFromId(id){
 

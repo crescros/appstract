@@ -4,12 +4,11 @@ import { Box } from "@material-ui/core"
 import Home from "./components/Home"
 import Draw from "./components/Draw/Draw"
 import View from "./components/View/View"
-import NavBar from "./components/NavBar"
+import Backgrounds from "./components/Backgrounds/Backgrounds"
 
 function Demo() {
     return (
         <Router>
-            <NavBar />
             <Box p={2}>
                 <Switch>
                     <Route path="/draw">
@@ -17,6 +16,9 @@ function Demo() {
                     </Route>
                     <Route path="/view">
                         <View />
+                    </Route>
+                    <Route path="/backgrounds">
+                        <Backgrounds />
                     </Route>
                     <Route exact path="/">
                         <Home />
