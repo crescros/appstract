@@ -26,6 +26,7 @@ export default function Draw() {
     const canvasRef = useRef(null)
 
     const handleClickUpload = async () => {
+        if (!confirm("upload the image?")) return;
         const data = canvasRef.current.getSaveData()
         const response = await postDrawing({
             "name": drawingName || "untitled",
@@ -46,7 +47,12 @@ export default function Draw() {
     }
 
     const handleClickUndo = () => {
-
+        canvasRef.current.undo()
+    }
+    
+    const handleClickClear = () => {
+        if (!confirm("are you sure you want to clear the entire image? ")) return;
+        canvasRef.current.clear()
     }
 
     const handleChangeBackground = (e, newValue) => {
@@ -101,6 +107,9 @@ export default function Draw() {
             </Grid>
             <Grid item>
                 <Button onClick={handleClickUndo} variant="contained" color="secondary">undo </Button>
+            </Grid>
+            <Grid item>
+                <Button onClick={handleClickClear} variant="contained" color="secondary">clear </Button>
             </Grid>
             <Grid item>
                 <Button onClick={handleClickUpload} variant="contained" color="secondary">upload </Button>
