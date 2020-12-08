@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CanvasDraw from "react-canvas-draw";
 import { Box, Typography, IconButton, Grid, Menu, MenuItem } from "@material-ui/core"
 import MoreVert from "@material-ui/icons/MoreVert"
-import { getDrawings, removeDrawing } from "../functions"
+import { getDrawings, removeDrawing, getBackgroundUrlFromId, bringBackgroundToFront } from "../../functions"
 
 const timeFormattingOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 export default function View() {
@@ -12,6 +12,9 @@ export default function View() {
     useEffect(() => {
         (async () => {
             setDrawings(await getDrawings())
+            document.querySelectorAll("canvas").forEach(node => {
+                node.style.zIndex = 14
+            })
         })()
     }, [])
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -35,6 +38,7 @@ export default function View() {
 
     return (
         <div>
+
             {drawings.data?.map(img => {
                 return <Box mb={8}>
                     <Menu
@@ -58,11 +62,13 @@ export default function View() {
                     </Grid>
                     <Typography color="textSecondary">uploaded {(new Date(img.uploadedAt)).toLocaleDateString(undefined, timeFormattingOptions)}</Typography>
                     <CanvasDraw
-                        // style={{ pointerEvents: "none" }}
+                        style={{ pointerEvents: "none", overflowX: "scroll" }}
                         saveData={img.drawing}
                         brushRadius={0}
-                        hideGrid={false}
+                        lazyRadius={0}
+                        hideGrid={true}
                         disabled={true}
+                        imgSrc={getBackgroundUrlFromId(img.backgroundId)}
                     />
                 </Box>
             })}

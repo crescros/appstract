@@ -4,6 +4,7 @@ const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require('uuid');
+const sampleData = require("./data/drawings-1.json")
 
 const nocache = require("nocache");
 app.use(nocache());
@@ -25,13 +26,13 @@ app.get("/draw", serveReactApp);
 app.get("/view", serveReactApp);
 app.use(express.static(path.join(__dirname, "./public")));
 
-let drawings = []
+let drawings = sampleData.drawings
 
 app.post("/api/drawings", (req, res) => {
   let drawing = req.body
 
   drawing.id = uuidv4()
-  drawings.shift(req.body)
+  drawings.unshift(req.body)
   res.send('ok')
 })
 

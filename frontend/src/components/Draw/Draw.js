@@ -1,27 +1,37 @@
 import React, { useRef, useState } from 'react'
-import CanvasDraw from "react-canvas-draw";
-import { Button, TextField, Grid, Typography, Slider } from "@material-ui/core"
+import { Button, TextField, Grid, Typography, Slider, Select, MenuItem } from "@material-ui/core"
 import ColorPicker from 'material-ui-color-picker'
 
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 
-import { postDrawing } from "../functions.js"
+import { getBackgroundUrlFromId, postDrawing } from "../../functions.js"
+
+import Canvas from "./Canvas"
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search)
+}
 
 export default function Draw() {
+
+    let query = useQuery()
+
     const [drawingName, setDrawingName] = useState()
     const [brushColor, setBrushColor] = useState("#444")
     const [brushSize, setBrushSize] = useState(12)
+    const backgroundId = query.get("background")
 
     const history = useHistory()
 
     const canvasRef = useRef(null)
 
-    const handleClick = async () => {
+    const handleClickUpload = async () => {
         const data = canvasRef.current.getSaveData()
         const response = await postDrawing({
             "name": drawingName || "untitled",
             "drawing": data,
-            "uploadedAt": new Date()
+            "uploadedAt": new Date(),
+            "backgroundId": backgroundId
         })
 
         history.push("/view")
@@ -35,6 +45,15 @@ export default function Draw() {
         setBrushSize(newValue)
     }
 
+    const handleClickUndo = () => {
+
+    }
+
+    const handleChangeBackground = (e, newValue) => {
+        location.href = "/draw?background=" + newValue.props.value
+    }
+
+
     return (
         <Grid container direction={"column"} style={{ maxWidth: "400px" }} spacing={2}>
             <Grid item>
@@ -45,12 +64,7 @@ export default function Draw() {
                 />
             </Grid>
             <Grid item>
-                <CanvasDraw
-                    ref={canvasRef}
-                    brushColor={brushColor}
-                    lazyRadius={0}
-                    brushRadius={brushSize }
-                />
+                <Canvas {...{ brushColor, canvasRef, brushSize }} imgUrl={getBackgroundUrlFromId(backgroundId)} />
             </Grid>
             <Grid item container>
                 <Grid item xs={4}>
@@ -58,7 +72,7 @@ export default function Draw() {
                 </Grid>
                 <Grid item xs={8}>
                     <ColorPicker
-                        style={{ background: brushColor, borderRadius: "12px", width: "100%"}}
+                        style={{ background: brushColor, borderRadius: "12px", width: "100%" }}
                         defaultValue="brush color"
                         name='color'
                         value={brushColor}
@@ -71,11 +85,25 @@ export default function Draw() {
                     <Typography>brush size </Typography>
                 </Grid>
                 <Grid item xs={8}>
-                    <Slider onChange={handleChangeSlider} value={brushSize}/>
+                    <Slider onChange={handleChangeSlider} value={brushSize} />
+                </Grid>
+            </Grid>
+            <Grid item container>
+                <Grid item xs={4}>
+                    <Typography>background</Typography>
+                </Grid>
+                <Grid item xs={8}>
+                    <Select onChange={handleChangeBackground} value={backgroundId} >
+                        <MenuItem value="" >None</MenuItem>
+                        <MenuItem value="1">Background 1</MenuItem>
+                    </Select>
                 </Grid>
             </Grid>
             <Grid item>
-                <Button onClick={handleClick} variant="contained" color="secondary">upload </Button>
+                <Button onClick={handleClickUndo} variant="contained" color="secondary">undo </Button>
+            </Grid>
+            <Grid item>
+                <Button onClick={handleClickUpload} variant="contained" color="secondary">upload </Button>
             </Grid>
         </Grid>
     )

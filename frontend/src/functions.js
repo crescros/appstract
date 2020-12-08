@@ -3,6 +3,9 @@ import axios from "axios"
 const baseUrl = process.env.REACT_APP_APPSTRACT_URL;
 // const baseUrl = "http://localhost:3016";
 
+
+// DRAWINGS
+
 export function postDrawing(data) {
     return axios({
         data: data,
@@ -37,4 +40,13 @@ export function removeDrawing(id) {
     }).then(data => {
         return data
     })
+}
+
+// BACKGROUNDS
+
+export function getBackgroundUrlFromId(id){
+
+    if (!id) return ''
+
+    return `./img/background-${id}.png`
 }
