@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import CanvasDraw from "react-canvas-draw";
 
-export default function Canvas({ brushColor, canvasRef, brushSize, imgUrl }) {
+export default function Canvas({ brushColor, canvasRef, brushSize, imgUrl, canvasWidth }) {
 
     useEffect(()=>{
         document.querySelectorAll("canvas")[3].style.zIndex = 14
@@ -14,7 +14,7 @@ export default function Canvas({ brushColor, canvasRef, brushSize, imgUrl }) {
                 brushColor={brushColor}
                 lazyRadius={4}
                 brushRadius={brushSize}
-                canvasWidth={400}
+                canvasWidth={canvasWidth}
                 imgSrc={imgUrl}
             />
         </div>

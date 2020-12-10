@@ -14,7 +14,7 @@ export default function Home() {
     }
 
     return (
-        <Box mt={2} align="center">
+        <Box mt={2}p={4} align="center">
             <Grid container style={{maxWidth: 420}} direction="column" spacing={4}>
                 <Grid item>
                     <Typography variant="h4" color="textSecondary">Welcome to</Typography>

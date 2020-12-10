@@ -3,8 +3,18 @@ const app = express();
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { v4: uuidv4 } = require('uuid');
-const sampleData = require("./data/drawings-1.json")
+
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+  // host: '35.194.95.240', // dev
+  host: '10.100.192.3', // prod
+  user: 'appstract',
+  password: 'appstract-pw',
+  database: 'appstract'
+
+});
+
+connection.connect();
 
 const nocache = require("nocache");
 app.use(nocache());
@@ -24,26 +34,33 @@ function serveReactApp(req, res) {
 app.get("/", serveReactApp);
 app.get("/draw", serveReactApp);
 app.get("/view", serveReactApp);
+app.get("/backgrounds", serveReactApp);
 app.use(express.static(path.join(__dirname, "./public")));
-
-let drawings = sampleData.drawings
 
 app.post("/api/drawings", (req, res) => {
   let drawing = req.body
+  const sql = `INSERT INTO drawings ( name, data, background_id, width)
+    VALUES ('${drawing.name}','${drawing.data}', '${drawing.backgroundId}', '${drawing.width}' );`
 
-  drawing.id = uuidv4()
-  drawings.unshift(req.body)
-  res.send('ok')
+  connection.query(sql, function (error, results, fields) {
+    if (error) throw error;
+    res.json(results)
+  })
 })
 
 app.get("/api/drawings", (req, res) => {
-  res.json(drawings)
+  const sql = `SELECT * FROM drawings ORDER BY created_at DESC LIMIT 3 OFFSET ${req.query.page ? (req.query.page - 1) * 3 : 0};`
+
+  connection.query(sql, function (error, results, fields) {
+    if (error) throw error;
+    res.json(results)
+  })
 })
 
-app.delete("/api/drawings", (req, res) => {
-  drawings = drawings.filter(drawing => drawing.id !== req.body.id)
-  res.send("ok")
-})
+// app.delete("/api/drawings", (req, res) => {
+//   drawings = drawings.filter(drawing => drawing.id !== req.body.id)
+//   res.send("ok")
+// })
 
 // start server
 const port = process.env.PORT || 3016;

@@ -11,17 +11,30 @@ export default function Backgrounds() {
         history.push("/draw?background=none")
     }
 
+    function handleGoBack(){
+        history.push("/")
+    }
+
     return (
-        <Grid container direction="column" align="center" spacing={3}>
-            <Grid item>
-                <Typography color="textSecondary" variant="h4">Choose a background</Typography>
+        <Box py={4} style={{
+            background: "#E9E9E9",
+            height:"100vh"
+        }}>
+
+            <Grid container direction="column" align="center" spacing={3}>
+                <Grid item>
+                    <Typography color="textSecondary" variant="h4">Choose a background</Typography>
+                </Grid>
+                <Grid item>
+                    <BackgroundSelect />
+                </Grid>
+                <Grid item>
+                    <Button onClick={handleBlankBackground} color="primary">Use Blank Background</Button>
+                </Grid>
+                <Grid item>
+                    <Button onClick={handleGoBack} color="secondary">Go Back</Button>
+                </Grid>
             </Grid>
-            <Grid item>
-                <BackgroundSelect />
-            </Grid>
-            <Grid item>
-                <Button onClick={handleBlankBackground} color="secondary">Use Blank Background</Button>
-            </Grid>
-        </Grid>
+        </Box>
     )
 }

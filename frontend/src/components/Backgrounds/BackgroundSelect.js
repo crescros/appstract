@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Typography, Box, Button } from "@material-ui/core"
 import { getBackgroundUrlFromId } from "../../functions"
 import Carousel from 'react-material-ui-carousel'
 
 export default function BackgroundSelect() {
+
+
+    const [canvasWidth, setCanvasWidth] = useState(100)
+    useEffect(() => {
+        let screenWidth = window.innerWidth - 22
+        if (screenWidth < 400) setCanvasWidth(screenWidth)
+    }, [])
+
 
     const handleChooseBackground = (id) => {
         location.href = "/draw?background=" + id
@@ -43,8 +51,11 @@ export default function BackgroundSelect() {
                     }].map((background) => (
                         <Box align="center">
                             <Typography>{background.name}</Typography>
-                            <Box>
-                                <img width="400px" height="400px" src={getBackgroundUrlFromId(background.id)}></img>
+                            <Box style={{
+                                width: canvasWidth,
+                                background: "white"
+                            }}>
+                                <img width={`${canvasWidth}px`} height="400px" src={getBackgroundUrlFromId(background.id)}></img>
                             </Box>
                             <Button color="primary" variant="contained" onClick={() => handleChooseBackground(background.id)}>Use {background.name}</Button>
                         </Box>

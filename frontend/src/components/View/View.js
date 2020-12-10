@@ -25,15 +25,21 @@ export default function View() {
     const history = useHistory()
 
     const [drawings, setDrawings] = useState([])
+    const [page, setPage] = useState(1)
 
     useEffect(() => {
         (async () => {
-            setDrawings(await getDrawings())
+
+            const newDrawings = await getDrawings(page)
+
+            setDrawings(drawings => drawings.concat(newDrawings.data))
+
+
             document.querySelectorAll("canvas").forEach(node => {
                 node.style.zIndex = 14
             })
         })()
-    }, [])
+    }, [page])
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -53,7 +59,12 @@ export default function View() {
         }
     }
 
-    function handleDrawSomething (){
+    const handleSeeMore = () => {
+        setPage(page => page + 1)
+        console.log(page)
+    }
+
+    function handleDrawSomething() {
         history.push("/backgrounds")
     }
 
@@ -61,19 +72,21 @@ export default function View() {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
 
-            <Box align="center" mb={6}>
+            <Box align="center" mb={6} pt={4}>
                 <Button variant='contained' color="primary" onClick={handleDrawSomething}>Draw Something</Button>
             </Box>
-            {drawings.data?.map(img => {
+            {drawings.map(img => {
+
                 return <Box mb={8} align="center">
                     <CanvasDraw
                         style={{ pointerEvents: "none", overflowX: "scroll" }}
-                        saveData={img.drawing}
+                        saveData={img.data}
                         brushRadius={0}
                         lazyRadius={0}
                         hideGrid={true}
                         disabled={true}
-                        imgSrc={getBackgroundUrlFromId(img.backgroundId)}
+                        imgSrc={getBackgroundUrlFromId(img.background_id)}
+                        canvasWidth={img.width}
                     />
 
                     <Box p={3}>
@@ -98,7 +111,9 @@ export default function View() {
 
                 </Box>
             })}
-
+            <Box align="center" mb={6} pt={4}>
+                <Button variant='contained' color="primary" onClick={handleSeeMore}>See More</Button>
+            </Box>
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}

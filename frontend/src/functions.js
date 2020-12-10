@@ -4,9 +4,7 @@ import { useLocation } from "react-router-dom"
 const baseUrl = process.env.REACT_APP_APPSTRACT_URL;
 // const baseUrl = "http://localhost:3016";
 
-
 // DRAWINGS
-
 export function postDrawing(data) {
     return axios({
         data: data,
@@ -18,13 +16,13 @@ export function postDrawing(data) {
     })
 }
 
-export function getDrawings() {
+export function getDrawings(page) {
     return axios({
         headers: {
             'Content-Type': 'application/json'
         },
         method: "GET",
-        url: baseUrl + "/api/drawings"
+        url: baseUrl + "/api/drawings?page=" + page
     }).then(data => {
         return data
     })

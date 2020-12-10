@@ -9,7 +9,7 @@ import Backgrounds from "./components/Backgrounds/Backgrounds"
 function Demo() {
     return (
         <Router>
-            <Box p={2}>
+            <Box>
                 <Switch>
                     <Route path="/draw">
                         <Draw />
