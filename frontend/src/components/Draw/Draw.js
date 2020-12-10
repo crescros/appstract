@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Button, Grid, Typography, Slider, Box } from "@material-ui/core"
 import ColorPicker from 'material-ui-color-picker'
-import { useHistory, useLocation } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 import { getBackgroundUrlFromId, postDrawing, getCurrentBackgroundId } from "../../functions.js"
 
@@ -14,10 +14,7 @@ export default function Draw() {
     const [brushSize, setBrushSize] = useState(12)
     const [uploadModalOpen, setUploadModalOpen] = useState(false)
     const history = useHistory()
-
     const [drawingName, setDrawingName] = useState()
-
-
 
     const handleUpload = async () => {
         const data = canvasRef.current.getSaveData()
@@ -65,7 +62,6 @@ export default function Draw() {
 
     return (
         <Box align="center">
-
             <Grid container direction={"column"} style={{ maxWidth: "400px" }} spacing={2}>
                 <Grid item>
                     <Canvas {...{ brushColor, canvasRef, brushSize }} imgUrl={getBackgroundUrlFromId(backgroundId)} />

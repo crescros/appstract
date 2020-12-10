@@ -20,7 +20,7 @@ export default function Home() {
                     <Typography variant="h4" color="textSecondary">Welcome to</Typography>
                     <Typography variant="h3" align="center" gutterBottom>Appstract</Typography>
                     <Typography align="center" gutterBottom>We are currently in develop mode, which means your drawings will only be stored for a few minutes or less. </Typography>
-                    <Typography align="center" gutterBottom>Feel free to upload as many drawings as much as you want - it will help us testing! </Typography>
+                    <Typography align="center" gutterBottom>Feel free to upload as many drawings as much as you want - it will help us with testing! </Typography>
                 </Grid>
                 <Grid item>
                     <Button onClick={handleDrawSomething} color="primary" variant="contained">Draw Something </Button>

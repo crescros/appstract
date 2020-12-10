@@ -34,6 +34,12 @@ export default function BackgroundSelect() {
                     }, {
                         id: 6,
                         name: "Background 6"
+                    }, {
+                        id: 7,
+                        name: "Background 7"
+                    }, {
+                        id: 8,
+                        name: "Background 8"
                     }].map((background) => (
                         <Box align="center">
                             <Typography>{background.name}</Typography>

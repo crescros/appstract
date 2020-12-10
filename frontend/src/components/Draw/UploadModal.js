@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Dialog, TextField, Button, Grid, Box } from "@material-ui/core"
 
-
-
 export default function UploadModal({ open, onClose, handleChangeNameInput, drawingName, handleUpload }) {
 
     return (

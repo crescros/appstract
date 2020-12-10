@@ -1,11 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import CanvasDraw from "react-canvas-draw";
-import { Box, Typography, IconButton, Grid, Menu, MenuItem } from "@material-ui/core"
+import { Box, Typography, IconButton, Grid, Menu, MenuItem, Button } from "@material-ui/core"
 import MoreVert from "@material-ui/icons/MoreVert"
 import { getDrawings, removeDrawing, getBackgroundUrlFromId, bringBackgroundToFront } from "../../functions"
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+import { CssBaseline } from "@material-ui/core";
+import { useHistory } from "react-router-dom"
 
-const timeFormattingOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const darkTheme = createMuiTheme({
+    palette: {
+        background: {
+            default: "#141414",
+        },
+        type: "dark",
+    },
+    shadows: ["none"],
+});
+
+const timeFormattingOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+
 export default function View() {
+
+    const history = useHistory()
 
     const [drawings, setDrawings] = useState([])
 
@@ -36,31 +53,19 @@ export default function View() {
         }
     }
 
-    return (
-        <div>
+    function handleDrawSomething (){
+        history.push("/backgrounds")
+    }
 
+    return (
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+
+            <Box align="center" mb={6}>
+                <Button variant='contained' color="primary" onClick={handleDrawSomething}>Draw Something</Button>
+            </Box>
             {drawings.data?.map(img => {
-                return <Box mb={8}>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
-                        <MenuItem onClick={() => handleClickRemove(img.id, img.name)}>Remove</MenuItem>
-                    </Menu>
-                    <Grid container>
-                        <Grid item>
-                            <Typography variant="h4">{img.name}</Typography>
-                        </Grid>
-                        <Grid item>
-                            <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                <MoreVert />
-                            </IconButton>
-                        </Grid>
-                    </Grid>
-                    <Typography color="textSecondary">uploaded {(new Date(img.uploadedAt)).toLocaleDateString(undefined, timeFormattingOptions)}</Typography>
+                return <Box mb={8} align="center">
                     <CanvasDraw
                         style={{ pointerEvents: "none", overflowX: "scroll" }}
                         saveData={img.drawing}
@@ -70,8 +75,39 @@ export default function View() {
                         disabled={true}
                         imgSrc={getBackgroundUrlFromId(img.backgroundId)}
                     />
+
+                    <Box p={3}>
+
+
+                        <Grid container justify="center">
+                            <Grid container item justify="center">
+                                <Grid item>
+                                    <Typography variant="h4">{img.name}</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                        <MoreVert />
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                <Typography color="textSecondary">uploaded {(new Date(img.uploadedAt)).toLocaleDateString(undefined, timeFormattingOptions)}</Typography>
+                            </Grid>
+                        </Grid>
+                    </Box>
+
                 </Box>
             })}
-        </div>
+
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={() => handleClickRemove(img.id, img.name)}>Remove</MenuItem>
+            </Menu>
+        </ThemeProvider>
     )
 }

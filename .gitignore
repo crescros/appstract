@@ -1,1 +1,5 @@
 node_modules
+scripts
+.env
+app.yaml
+.key
