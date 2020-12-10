@@ -8,7 +8,8 @@ import Backgrounds from "./components/Backgrounds/Backgrounds"
 
 function Demo() {
     return (
-        <Box sytle={{
+        <Box sytle={{width: "100vw",
+        height: '100vh',
             overflowX: "hidden"
         }}>
             <Router>
