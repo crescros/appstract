@@ -4,14 +4,14 @@ const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+require("dotenv").config();
+
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  // host: '35.194.95.240', // dev
-  host: '10.100.192.3', // prod
-  user: 'appstract',
-  password: 'appstract-pw',
-  database: 'appstract'
-
+  host: process.env.NODE_ENV === "development" ? process.env.DB_HOST_DEV : process.env.DB_HOST_PROD, // prod
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME
 });
 
 connection.connect();

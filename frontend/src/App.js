@@ -8,8 +8,10 @@ import Backgrounds from "./components/Backgrounds/Backgrounds"
 
 function Demo() {
     return (
-        <Router>
-            <Box>
+        <Box sytle={{
+            overflowX: "hidden"
+        }}>
+            <Router>
                 <Switch>
                     <Route path="/draw">
                         <Draw />
@@ -24,8 +26,8 @@ function Demo() {
                         <Home />
                     </Route>
                 </Switch>
-            </Box>
-        </Router>
+            </Router>
+        </Box>
     );
 }
 

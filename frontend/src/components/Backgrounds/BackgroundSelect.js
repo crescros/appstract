@@ -5,10 +5,10 @@ import Carousel from 'react-material-ui-carousel'
 
 export default function BackgroundSelect() {
 
-
-    const [canvasWidth, setCanvasWidth] = useState(100)
+    const [canvasWidth, setCanvasWidth] = useState(400)
     useEffect(() => {
         let screenWidth = window.innerWidth - 22
+        console.log(screenWidth)
         if (screenWidth < 400) setCanvasWidth(screenWidth)
     }, [])
 

@@ -1,8 +1,8 @@
 import axios from "axios"
 import { useLocation } from "react-router-dom"
 
-const baseUrl = process.env.REACT_APP_APPSTRACT_URL;
-// const baseUrl = "http://localhost:3016";
+const baseUrl = process.env.NODE_ENV === "development" ? " http://localhost:3016" : process.env.REACT_APP_APPSTRACT_URL
+
 
 // DRAWINGS
 export function postDrawing(data) {
@@ -30,7 +30,7 @@ export function getDrawings(page) {
 
 export function removeDrawing(id) {
     return axios({
-        data: {"id":id}, 
+        data: { "id": id },
         headers: {
             'Content-Type': 'application/json'
         },
@@ -46,18 +46,18 @@ function useQuery() {
     return new URLSearchParams(useLocation().search)
 }
 
-export function getCurrentBackgroundId(){
+export function getCurrentBackgroundId() {
 
     let query = useQuery()
-    
+
     let backgroundId = query.get("background")
-    
+
     if (!backgroundId) backgroundId = "none"
 
     return backgroundId
 }
 
-export function getBackgroundUrlFromId(id){
+export function getBackgroundUrlFromId(id) {
 
     if (!id) return ''
 

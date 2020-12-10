@@ -14,9 +14,9 @@ export default function Draw() {
     const [brushSize, setBrushSize] = useState(12)
     const [uploadModalOpen, setUploadModalOpen] = useState(false)
     const [drawingName, setDrawingName] = useState()
-    
+
     const history = useHistory()
-    
+
     const [canvasWidth, setCanvasWidth] = useState(400)
     useEffect(() => {
         let screenWidth = window.innerWidth - 22
@@ -64,6 +64,11 @@ export default function Draw() {
         canvasRef.current.clear()
     }
 
+    const handleChangeColor = (e) => {
+
+        setBrushColor(e.target.value)
+    }
+
     return (
         <Box align="center" py={4} style={{
             background: "#ccc",
@@ -79,13 +84,14 @@ export default function Draw() {
                     <Typography align="center">color </Typography>
                 </Grid>
                 <Grid item xs={2}>
-                    <ColorPicker
-                        style={{ background: brushColor, borderRadius: "100%", width: "32px" }}
-                        defaultValue="brush color"
+
+                    <input
+                        style={{  borderRadius: "100%", width: "32px" }}
                         name='color'
-                        value={brushColor}
-                        onChange={color => setBrushColor(color)}
-                    />
+                        // value={brushColor}
+                        onChange={handleChangeColor}
+
+                        type="color"></input>
                 </Grid>
                 <Grid item xs={2}>
                     <Typography align="center">size </Typography>

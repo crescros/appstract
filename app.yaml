@@ -5,4 +5,4 @@ vpc_access_connector:
   name: projects/appstract/locations/us-east4/connectors/appstract-connector-1
   
 env_variables:
-  NODE_ENV: "production"
+  NODE_ENV: production
