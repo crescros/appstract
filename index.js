@@ -19,6 +19,7 @@ connection.connect();
 const nocache = require("nocache");
 app.use(nocache());
 app.set("etag", false);
+app.set('trust proxy', true)
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -48,8 +49,33 @@ app.post("/api/drawings", (req, res) => {
   })
 })
 
-app.get("/api/drawings", (req, res) => {
-  const sql = `SELECT * FROM drawings ORDER BY created_at DESC LIMIT 3 OFFSET ${req.query.page ? (req.query.page - 1) * 3 : 0};`
+app.get("/api/drawings", async (req, res) => {
+  const sql = `
+  SELECT id, background_id, width, name, created_at, data FROM drawings
+  ORDER BY created_at DESC 
+  LIMIT 3 
+  OFFSET ${req.query.page ? (req.query.page - 1) * 3 : 0};`
+
+  connection.query(sql, function (error, results, fields) {
+    if (error) throw error;
+    res.json(results)
+  })
+})
+
+app.post("/api/ratings", (req, res) => {
+  const sql = `INSERT INTO ratings ( drawing_id, value)
+    VALUES ('${req.body.drawing_id}','${req.body.rating}');`
+
+    console.log(req.ip)
+
+    connection.query(sql, function (error, results, fields) {
+      if (error) throw error;
+      res.json(results)
+    })
+})
+
+app.get("/api/ratings", (req, res) => {
+  const sql = `SELECT AVG(value), COUNT(value) FROM ratings WHERE drawing_id = ${req.query.id};`
 
   connection.query(sql, function (error, results, fields) {
     if (error) throw error;

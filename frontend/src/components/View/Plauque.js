@@ -51,7 +51,9 @@ export default function Plauque({ img }) {
                     </Grid>
                 </Grid>
                 <Grid item>
-                    <Typography color="textSecondary">uploaded {(new Date(img.created_at)).toLocaleDateString(undefined, timeFormattingOptions)}</Typography>
+                    <Typography color="textSecondary">
+                        uploaded {(new Date(img.created_at)).toLocaleDateString(undefined, timeFormattingOptions)}
+                    </Typography>
                 </Grid>
             </Grid>
             <Menu

@@ -24,6 +24,7 @@ export function getDrawings(page) {
         method: "GET",
         url: baseUrl + "/api/drawings?page=" + page
     }).then(data => {
+        console.log(data)
         return data
     })
 }
@@ -38,6 +39,45 @@ export function removeDrawing(id) {
         url: baseUrl + "/api/drawings"
     }).then(data => {
         return data
+    })
+}
+
+// RATINGS 
+
+export function getRating(drawing_id) {
+    return axios({
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: "GET",
+        url: baseUrl + "/api/ratings?id=" + drawing_id
+    }).then(data => {
+
+        const result = {
+            "average": data.data[0]["AVG(value)"],
+            "count": data.data[0]["COUNT(value)"]
+        }
+
+        return result
+    })
+}
+
+export function postRating(drawing_id, rating) {
+
+    const postData = {
+        "drawing_id": drawing_id,
+        "rating": rating
+    }
+
+    console.log(postData)
+
+    return axios({
+        data: postData,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        url: baseUrl + "/api/ratings"
     })
 }
 
@@ -65,6 +105,6 @@ export function getBackgroundUrlFromId(id) {
 }
 
 // DOM
-export function getScreenWidth(){
+export function getScreenWidth() {
     return window.innerWidth - 22
 }

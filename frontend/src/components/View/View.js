@@ -7,6 +7,7 @@ import { CssBaseline } from "@material-ui/core";
 import { useHistory } from "react-router-dom"
 import Canvas from "./Canvas"
 import Plauque from "./Plauque"
+import Rating from "./Rating"
 
 const darkTheme = createMuiTheme({
     palette: {
@@ -39,7 +40,6 @@ export default function View() {
 
     const handleSeeMore = () => {
         setPage(page => page + 1)
-        console.log(page)
     }
 
     function handleDrawSomething() {
@@ -58,6 +58,7 @@ export default function View() {
                 <Box mb={8} align="center">
                     <Canvas img={img} />
                     <Plauque img={img} />
+                    <Rating img={img} />
                 </Box>
             ))}
 
