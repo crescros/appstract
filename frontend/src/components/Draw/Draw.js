@@ -65,20 +65,21 @@ export default function Draw() {
     }
 
     return (
-        <Box align="center" py={4} style={{
+        <Box align="center" py={1} style={{
             background: "#ccc",
             height: "100vh"
         }}>
-            <Grid container style={{ maxWidth: "400px" }} spacing={2}>
+            <Grid container style={{ maxWidth: "400px" }} >
                 <Grid item xs={12}>
                     <Canvas {...{ brushColor, canvasRef, brushSize, canvasWidth }} imgUrl={getBackgroundUrlFromId(backgroundId)} />
+                    <Box p={1}></Box>
                 </Grid>
                 <Grid item xs={2}>
                     <Typography align="center">color </Typography>
                 </Grid>
                 <Grid item xs={2}>
                     <ColorPicker
-                        {...{brushColor, setBrushColor}}
+                        {...{ brushColor, setBrushColor }}
                     />
                 </Grid>
                 <Grid item xs={2}>
