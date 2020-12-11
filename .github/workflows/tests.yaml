@@ -20,7 +20,7 @@ jobs:
     - run: npm ci
     - run: cd frontend && npm ci
     - run: npm run build
-    - run: npm run deploy
       env:
         CI: true
         SECRET: 123
+    

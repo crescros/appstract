@@ -19,7 +19,7 @@ export default function BackgroundSelect() {
     }
 
     return (
-        <Box maxWidth="380px">
+        <Box maxWidth="400px">
             <Carousel
                 navButtonsAlwaysVisible
                 animation="slide"
