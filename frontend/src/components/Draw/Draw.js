@@ -82,11 +82,15 @@ export default function Draw() {
                         {...{ brushColor, setBrushColor }}
                     />
                 </Grid>
+                <Grid item xs={1}>
+                </Grid>
                 <Grid item xs={2}>
                     <Typography align="center">size </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <Slider min={1} onChange={handleChangeSlider} value={brushSize} />
+                </Grid>
+                <Grid item xs={1}>
                 </Grid>
                 <Grid item xs={1}>
                 </Grid>

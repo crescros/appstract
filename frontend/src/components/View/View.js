@@ -79,7 +79,7 @@ export default function View() {
 
                 return <Box mb={8} align="center">
                     <CanvasDraw
-                        style={{ pointerEvents: "none", overflowX: "scroll" }}
+                        style={{ pointerEvents: "none", overflowX: "scroll", maxWidth:"100%" }}
                         saveData={img.data}
                         brushRadius={0}
                         lazyRadius={0}
@@ -89,9 +89,7 @@ export default function View() {
                         canvasWidth={img.width}
                     />
 
-                    <Box p={3}>
-
-
+                    <Box py={3}>
                         <Grid container justify="center">
                             <Grid container item justify="center">
                                 <Grid item>
