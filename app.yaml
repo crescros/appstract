@@ -6,3 +6,9 @@ vpc_access_connector:
   
 env_variables:
   NODE_ENV: production
+
+handlers:
+- url: /.*
+  secure: always
+  redirect_http_response_code: 301
+  script: auto

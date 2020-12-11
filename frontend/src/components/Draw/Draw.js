@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Button, Grid, Typography, Slider, Box } from "@material-ui/core"
-import ColorPicker from 'material-ui-color-picker'
+import ColorPicker from './ColorPicker'
 import { useHistory } from "react-router-dom"
 
 import { getBackgroundUrlFromId, postDrawing, getCurrentBackgroundId } from "../../functions.js"
@@ -84,14 +84,9 @@ export default function Draw() {
                     <Typography align="center">color </Typography>
                 </Grid>
                 <Grid item xs={2}>
-
-                    <input
-                        style={{  borderRadius: "100%", width: "32px" }}
-                        name='color'
-                        // value={brushColor}
-                        onChange={handleChangeColor}
-
-                        type="color"></input>
+                    <ColorPicker
+                        {...{brushColor, setBrushColor}}
+                    />
                 </Grid>
                 <Grid item xs={2}>
                     <Typography align="center">size </Typography>
