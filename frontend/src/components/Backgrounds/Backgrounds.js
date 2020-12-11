@@ -18,10 +18,9 @@ export default function Backgrounds() {
     return (
         <Box py={4} style={{
             background: "#E9E9E9",
-            height:"100vh"
         }}>
 
-            <Grid container direction="column" align="center" spacing={3}>
+            <Grid container direction="column" align="center" >
                 <Grid item>
                     <Typography color="textSecondary" variant="h4">Choose a background</Typography>
                 </Grid>

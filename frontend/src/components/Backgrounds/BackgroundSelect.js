@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Typography, Box, Button } from "@material-ui/core"
-import { getBackgroundUrlFromId } from "../../functions"
+import { getBackgroundUrlFromId, getScreenWidth } from "../../functions"
 import Carousel from 'react-material-ui-carousel'
 
 export default function BackgroundSelect() {
 
     const [canvasWidth, setCanvasWidth] = useState(400)
+
+
     useEffect(() => {
-        let screenWidth = window.innerWidth - 22
-        console.log(screenWidth)
+        let screenWidth = getScreenWidth()
         if (screenWidth < 400) setCanvasWidth(screenWidth)
     }, [])
 
@@ -18,7 +19,7 @@ export default function BackgroundSelect() {
     }
 
     return (
-        <Box maxWidth="550px">
+        <Box maxWidth="380px">
             <Carousel
                 navButtonsAlwaysVisible
                 animation="slide"

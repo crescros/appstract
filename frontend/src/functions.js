@@ -63,3 +63,8 @@ export function getBackgroundUrlFromId(id) {
 
     return `./img/background-${id}.png`
 }
+
+// DOM
+export function getScreenWidth(){
+    return window.innerWidth - 22
+}

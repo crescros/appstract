@@ -3,7 +3,7 @@ import { Button, Grid, Typography, Slider, Box } from "@material-ui/core"
 import ColorPicker from './ColorPicker'
 import { useHistory } from "react-router-dom"
 
-import { getBackgroundUrlFromId, postDrawing, getCurrentBackgroundId } from "../../functions.js"
+import { getBackgroundUrlFromId, postDrawing, getCurrentBackgroundId, getScreenWidth } from "../../functions.js"
 
 import Canvas from "./Canvas"
 import UploadModal from "./UploadModal"
@@ -19,7 +19,7 @@ export default function Draw() {
 
     const [canvasWidth, setCanvasWidth] = useState(400)
     useEffect(() => {
-        let screenWidth = window.innerWidth - 22
+        let screenWidth = getScreenWidth()
         if (screenWidth < 400) setCanvasWidth(screenWidth)
     }, [])
 
@@ -64,22 +64,15 @@ export default function Draw() {
         canvasRef.current.clear()
     }
 
-    const handleChangeColor = (e) => {
-
-        setBrushColor(e.target.value)
-    }
-
     return (
         <Box align="center" py={4} style={{
             background: "#ccc",
             height: "100vh"
         }}>
-            <Typography gutterBottom>Draw</Typography>
             <Grid container style={{ maxWidth: "400px" }} spacing={2}>
                 <Grid item xs={12}>
                     <Canvas {...{ brushColor, canvasRef, brushSize, canvasWidth }} imgUrl={getBackgroundUrlFromId(backgroundId)} />
                 </Grid>
-
                 <Grid item xs={2}>
                     <Typography align="center">color </Typography>
                 </Grid>
