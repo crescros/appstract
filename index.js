@@ -37,7 +37,7 @@ function serveReactApp(req, res) {
 function createDrawing(req, res) {
   let drawing = req.body
   const sql = `INSERT INTO drawings ( name, data, background_id, width, user_ip)
-    VALUES ('${drawing.name}','${drawing.data}', '${drawing.backgroundId}', '${drawing.width}' );`
+    VALUES ('${drawing.name}','${drawing.data}', '${drawing.backgroundId}', '${drawing.width}','${req.ip}' );`
 
   connection.query(sql, function (error, results, fields) {
     if (error) throw error;
