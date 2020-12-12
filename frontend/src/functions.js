@@ -69,8 +69,6 @@ export function postRating(drawing_id, rating) {
         "rating": rating
     }
 
-    console.log(postData)
-
     return axios({
         data: postData,
         headers: {
