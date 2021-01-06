@@ -26,7 +26,6 @@ export default function AppstractRating({ img }) {
             value = 5
         }
         postRating(img.id, value)
-        history.push("/")
     }
 
     return (

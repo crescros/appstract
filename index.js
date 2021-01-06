@@ -58,14 +58,33 @@ function getDrawings(req, res) {
   })
 }
 
+function checkIfUserCanMakeRating(userIp, drawingId, callback) {
+
+  const sql = `SELECT * FROM ratings WHERE user_ip='${userIp}' AND drawing_id='${drawingId}'`
+
+  connection.query(sql, function (error, results) {
+    if (error) throw error
+
+
+
+    if (results?.length === 0) {
+      callback()
+    } else {
+      return "user ip has already rated this drawing"
+    }
+  })
+}
+
 function createRating(req, res) {
-  const sql = `INSERT INTO ratings ( drawing_id, value, user_ip)
-      VALUES ('${req.body.drawing_id}','${req.body.rating}','${req.ip}');`
 
+  checkIfUserCanMakeRating(req.ip, req.body.drawing_id, function () {
+    const sql = `INSERT INTO ratings ( drawing_id, value, user_ip)
+    VALUES ('${req.body.drawing_id}','${req.body.rating}','${req.ip}');`
 
-  connection.query(sql, function (error, results, fields) {
-    if (error) throw error;
-    res.json(results)
+    connection.query(sql, function (error, results, fields) {
+      if (error) throw error;
+      res.json(results)
+    })
   })
 }
 
