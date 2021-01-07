@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom"
 export default function AppstractRating({ img }) {
     const [rating, setRating] = useState(null)
     const [ratingCount, setRatingCount] = useState(0)
+    const [ count, setCount ] = useState(0)
+   
 
     const history = useHistory()
 
@@ -17,7 +19,9 @@ export default function AppstractRating({ img }) {
                 setRatingCount(rating.count)
             })
         })()
-    }, [])
+
+        , [count]
+    })
 
     function handleRate(e, newRating) {
 
@@ -25,7 +29,9 @@ export default function AppstractRating({ img }) {
         if(!newRating){
             value = 5
         }
-        postRating(img.id, value)
+        postRating(img.id, value).then(() => {
+            setCount(count + 1)
+        })
     }
 
     return (
