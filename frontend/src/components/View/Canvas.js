@@ -5,7 +5,7 @@ import { getBackgroundUrlFromId } from "../../functions"
 export default function Canvas({img}) {
     return (
         <CanvasDraw
-        style={{ pointerEvents: "none", overflowX: "scroll", maxWidth:"100%" }}
+        style={{ pointerEvents: "none", maxWidth:"100%" }}
         saveData={img.data}
         brushRadius={0}
         lazyRadius={0}

@@ -44,11 +44,11 @@ export default function Plauque({ img }) {
                     <Grid item>
                         <Typography variant="h4">{img.name}</Typography>
                     </Grid>
-                    <Grid item>
+                    {/* <Grid item>
                         <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                             <MoreVert />
                         </IconButton>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 <Grid item>
                     <Typography color="textSecondary">

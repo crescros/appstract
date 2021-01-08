@@ -12,6 +12,7 @@ export default function UploadModal({ open, onClose, handleChangeNameInput, draw
                             value={drawingName}
                             label="picture name"
                             onChange={handleChangeNameInput}
+                            autoFocus
                         />
                     </Grid>
                     <Grid item>

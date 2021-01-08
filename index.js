@@ -67,7 +67,7 @@ function checkIfUserCanMakeRating(userIp, drawingId, callback) {
 
 
 
-    if (results?.length === 0) {
+    if (results && results.length === 0) {
       callback()
     } else {
       return "user ip has already rated this drawing"
